@@ -64,7 +64,7 @@ set showcmd
 set shortmess=atI " Shortens messages
 
 set nolist " Display unprintable charcters f12 - switches
-" set listchars=tab:·\ ,eol:¶,trail:·,extends:»,precedes:« " Unprintable chars mapping
+set listchars=tab:·\ ,eol:¶,trail:·,extends:»,precedes:« " Unprintable chars mapping
 
 set foldenable " Turn on folding
 set foldmethod=marker
@@ -78,8 +78,6 @@ set splitbelow
 set splitright
 set t_Co=256
 colorscheme jellybeans
-set colorcolumn=81
-hi ColorScheme ctermbg=lightgrey
 " }}}
 
 " Command and Auto commands "{{{
@@ -87,16 +85,20 @@ hi ColorScheme ctermbg=lightgrey
 comm! W exec 'w !sudo tee % > /dev/null' | e!
 
 " Auto commands
-au FileType html,python,vim,javascript setl shiftwidth=2
-au FileType html,python,vim,javascript setl tabstop=2
-au FileType java,php setl shiftwidth=4
-au FileType java,php setl tabstop=4
+au BufRead,BufNewFile *.tpl set ft=html
+au FileType html,python,vim setl shiftwidth=2
+au FileType html,python,vim setl tabstop=2
+au FileType java,php,javascript setl shiftwidth=4
+au FileType java,php,javascript setl tabstop=4
+au FileType javascript set syntax=jquery
 
 " au BufRead,BufNewFile {COMMIT_EDITMSG}    set ft=gitcommit
 " au BufRead,BufNewFile *.js set ft=javascript.jquery
-au BufRead,BufNewFile *.tpl set ft=html.jquery
 " 修改后自动载入
 autocmd! bufwritepost vimrc source ~/.vimrc
+
+" Use jslint
+" cabbr js !js ~/js/runjslint.js "`cat %`" \| ~/format.py
 " }}}
 
 " Key mappings " {{{
@@ -122,8 +124,24 @@ nnoremap <C-I> <ESC>:read !
 " 在分号前加一个右括号
 map <C-A> $i)
 
+" map <F4> :EnablePHPFolds()<CR>
+map <F4> :JSHintToggle<CR>
 map <silent> <F12> :set invlist<CR>
 map <F5> :call Run()<CR>
+" map <F6> yyp^cwvar_dump<ESC>Adie;<ESC>:w<CR>
+map <F6> :call VarDump()<CR>
+
+func! VarDump()
+  exec "normal! yyp"
+  let line =  getline('.')
+  let thischar = line[col('.')-1]
+  if thischar == '$'
+    echo "!"
+    exec "normal! ivar_dump(\<ESC>$i);die;\<ESC>:w<CR>"
+  else
+    exec "normal! cwvar_dump\<ESC>Adie;\<ESC>:w<CR>"
+  endif
+endfunc
 
 func! Run()
   exec "w"
@@ -131,10 +149,9 @@ func! Run()
     exec "!php %"
   elseif &filetype == 'sh'
     exec "!sh %"
-  elseif &filetype == 'javascript'
-    exec "!node %"
   endif
 endfunc
+
 
 " }}}
 
@@ -157,10 +174,16 @@ let Tlist_File_Auto_Close=1
 let Tlist_Exit_OnlyWindow=1
 map <silent><F3> :TlistToggle<CR>
 " Programming
+" Bundle 'joestelmach/lint.vim'
 Bundle 'jQuery'
+Bundle 'JavaScript-syntax'
+Bundle 'Better-Javascript-Indentation'
 Bundle 'jsbeautify'
-Bundle 'php.vim'
+Bundle 'int3/vim-taglist-plus'
+Bundle 'friparia/php.vim'
 Bundle 'phpfolding.vim'
+Bundle 'sql.vim'
+let javaScript_fold=1
 " Git
 " Bundle 'git.zip'
 Bundle 'tpope/vim-fugitive'
@@ -267,7 +290,7 @@ Bundle 'vim-scripts/surround.vim'
 
 Bundle 'mattn/emmet-vim'
 "powerline{{{
-Bundle 'Lokaltog/powerline'
+" Bundle 'Lokaltog/powerline'
 Bundle 'Lokaltog/vim-powerline'
 set guifont=PowerlineSymbols\ for\ Powerline
 let g:Powerline_symbols = 'fancy'
@@ -278,6 +301,7 @@ Bundle 'Mark'
 Bundle 'vim-scripts/matchit.zip'
 Bundle 'tpope/vim-pathogen'
 "Bundle 'a.vim'
+" Bundle 'wookiehangover/jshint.vim'
 
 filetype plugin indent on " 自动对齐， 允许插件
 "}}}
