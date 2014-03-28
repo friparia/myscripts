@@ -1,11 +1,13 @@
 #!/usr/bin/env sh
+FILESERVER=10.3.18.186/frip
+
 if [ -z $1 ];then
   if [ -e ~/vimrc.tar.gz ];then
     echo -e '\033[041mYou already have your vimrc package download! Check it and remove it\033[0m'
     exit
   fi
   #need to write more check
-  wget -O ~/vimrc.tar.gz www.friparia.com/vimrc.tar.gz
+  wget -O ~/vimrc.tar.gz $FILESERVER/vimrc.tar.gz
   mkdir ~/vimrc
   tar -zxvf ~/vimrc.tar.gz -C ~/vimrc
   if [ -d ~/.vim/ ]; then 
@@ -27,7 +29,7 @@ elif [ $1 = --update ];then
   echo -e ""
   exit
 elif [ $1 = --github ];then
-  echo -e '\033[31mclean install\033[0m'
+  # vim +BundleInstall! +BundleClean +q
   exit
 else
   echo -e '\033[041mwrong parameter!\033[0m'
