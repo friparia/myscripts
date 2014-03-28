@@ -1,24 +1,25 @@
 #!/usr/bin/env sh
-FILESERVERHOST=( 10.3.18.186 file.friparia.com )
+FILESERVERHOST=( 10.3.18.186 www.friparia.com )
 FILESERVERDIR=( /frip "")
-echo -e "\033[041mCalculating fastest mirror\033[0m"
+echo -e "\033[032mCalculating fastest mirror\033[0m"
 i=0
 fastspeed=2000
 selected=0
-speed=0
+
 while [ $i -lt ${#FILESERVERHOST[*]} ] 
 do
-  $speed=`ping -c4 ${FILESERVERHOST[$i]} | grep ^rtt | cut -d '/' -f5 || 0`
+  speed=`ping -c2 ${FILESERVERHOST[$i]} | grep ^rtt | cut -d '/' -f5`
+  speed=${speed/\.*}
   if [ $fastspeed -ge $speed ];then
-    $fastspeed=`$speed` 
-    $selected=`$i`
+    fastspeed=$speed
+    selected=$i
   fi
   let i++
 done
+
 FASTFILESERVER=${FILESERVERHOST[$selected]}
 FASTFILESERVERDIR=${FILESERVERDIR[$selected]}
-echo $FASTFILESERVER/$FASTFILESERVERDIR/vimrc.tar.gz
-exit
+echo -e "\033[032mThe fastest host is $FASTFILESERVER\033[0m"
 
 if [ -z $1 ];then
   if [ -e ~/vimrc.tar.gz ];then
