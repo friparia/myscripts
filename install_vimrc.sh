@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-FILESERVERHOST=( 10.3.18.186 www.friparia.com )
+FILESERVERHOST=( 10.3.18.186 file.friparia.com )
 FILESERVERDIR=( /frip "")
 echo -e "\033[032mCalculating fastest mirror\033[0m"
 i=0
