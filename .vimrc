@@ -1,5 +1,6 @@
 " General "{{{
 set nocompatible " VI 兼容选项关闭
+set encoding=utf-8 " 设置文件编码
 set history=700 " 历史记录里面储存多少行
 set autoread " 文件被改动时自动载入
 set timeoutlen=250 " 按下ESC后需要等待的时间
