@@ -21,6 +21,8 @@ FASTFILESERVER=${FILESERVERHOST[$selected]}
 FASTFILESERVERDIR=${FILESERVERDIR[$selected]}
 echo -e "\033[032mThe fastest host is $FASTFILESERVER\033[0m"
 
+yum install -y ctags
+
 if [ -z $1 ];then
   if [ -e ~/vimrc.tar.gz ];then
     echo -e '\033[041mYou already have your vimrc package download! Check it and remove it\033[0m'
