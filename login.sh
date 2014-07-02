@@ -11,8 +11,8 @@
 #-----------------------------------------#
 
 #用户名及密码设置
-USERNAME=2011210142
-PASSWD=020271
+USERNAME=
+PASSWD=
 
 URL_LOGIN=http://gw.bupt.edu.cn
 URL_LOGOUT=http://gw.bupt.edu.cn/F.htm
