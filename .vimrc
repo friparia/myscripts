@@ -303,6 +303,18 @@ Bundle 'vim-scripts/matchit.zip'
 Bundle 'tpope/vim-pathogen'
 "Bundle 'a.vim'
 " Bundle 'wookiehangover/jshint.vim'
+Bundle "xsbeats/vim-blade"
+Bundle "SirVer/ultisnips"
+
+" Trigger configuration. Do not use <tab> if you use
+let g:UltiSnipsExpandTrigger="<c-e>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+" Bundle "markwu/vim-laravel4-snippets"
+" autocmd FileType php set ft=php.laravel
 
 filetype plugin indent on " 自动对齐， 允许插件
 "}}}
