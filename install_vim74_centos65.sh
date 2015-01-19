@@ -25,7 +25,7 @@ pip install powerline-status
 cd /opt/pkgs
 cd vim74
 yum install gcc make ncurses-devel
-pyconfig= `locate python | grep 'python2.7/config$'`
+pyconfig=`echo | locate python | grep 'python2.7/config$'`
 ./configure --disable-selinux --enable-multibyte --with-features=huge --with-python-config-dir=$pyconfig --enable-pythoninterp
 make
 make install
