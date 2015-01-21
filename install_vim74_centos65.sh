@@ -1,4 +1,4 @@
-yum remove $(rpm -qa | grep ^vim)
+yum remove $(rpm -qa | grep ^vim) -y
 yum install gcc make ncurses-devel -y
 mkdir -p /opt/pkgs
 cd /opt/pkgs
