@@ -292,9 +292,9 @@ Bundle 'vim-scripts/surround.vim'
 Bundle 'mattn/emmet-vim'
 "powerline{{{
 " Bundle 'Lokaltog/powerline'
-Bundle 'Lokaltog/vim-powerline'
-set guifont=PowerlineSymbols\ for\ Powerline
-let g:Powerline_symbols = 'fancy'
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 "}}}}
 
 Bundle 'Mark'
