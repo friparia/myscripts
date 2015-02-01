@@ -121,7 +121,8 @@ nnoremap * #
 
 " 执行命令后的输出到文件中
 nnoremap <C-I> <ESC>:read ! 
-
+" 直接选择shell
+nnoremap <C-H> <ESC>:sh<CR>
 " 在分号前加一个右括号
 map <C-A> $i)
 
