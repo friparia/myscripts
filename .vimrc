@@ -124,7 +124,8 @@ nnoremap * #
 
 " 执行命令后的输出到文件中
 nnoremap <C-I> <ESC>:read ! 
-
+" 直接选择shell
+nnoremap <C-H> <ESC>:sh<CR>
 " 在分号前加一个右括号
 map <C-A> $i)
 
@@ -308,10 +309,6 @@ Bundle 'powerline/powerline'
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
-" Bundle 'Lokaltog/powerline'
-" Bundle 'Lokaltog/vim-powerline'
-" set guifont=PowerlineSymbols\ for\ Powerline
-" let g:Powerline_symbols = 'fancy'
 "}}}}
 
 Bundle 'Mark'

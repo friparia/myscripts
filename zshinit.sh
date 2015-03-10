@@ -1,6 +1,6 @@
 cd ~
-wget http://mirrors.yun-idc.com/epel/5/x86_64/epel-release-5-4.noarch.rpm
-rpm -ivh epel-release-5-4.noarch.rpm
+rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
 yum install -y zsh
 sed -i "s/bash/zsh/g" /etc/passwd
 curl -L http://install.ohmyz.sh | sh
