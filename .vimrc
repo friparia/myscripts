@@ -87,11 +87,14 @@ comm! W exec 'w !sudo tee % > /dev/null' | e!
 
 " Auto commands
 au BufRead,BufNewFile *.tpl set ft=html
+au BufRead,BufNewFile *.volt set ft=html
+au FileType volt set ft=html
 au FileType html,python,vim setl shiftwidth=2
 au FileType html,python,vim setl tabstop=2
 au FileType java,php,javascript setl shiftwidth=4
 au FileType java,php,javascript setl tabstop=4
 au FileType javascript set syntax=jquery
+au FileType js set ft=javascript
 
 " au BufRead,BufNewFile {COMMIT_EDITMSG}    set ft=gitcommit
 " au BufRead,BufNewFile *.js set ft=javascript.jquery
@@ -129,15 +132,15 @@ map <C-A> $i)
 map <F4> :JSHintToggle<CR>
 map <silent> <F12> :set invlist<CR>
 map <F5> :call Run()<CR>
-" map <F6> yyp^cwvar_dump<ESC>Adie;<ESC>:w<CR>
 map <F6> :call VarDump()<CR>
+" 在写html中的js时使用ft=javascript
+map <C-X> :call ConvertHtmlAndJs()<CR>
 
 func! VarDump()
   exec "normal! yyp"
   let line =  getline('.')
   let thischar = line[col('.')-1]
   if thischar == '$'
-    echo "!"
     exec "normal! ivar_dump(\<ESC>$i);die;\<ESC>:w<CR>"
   else
     exec "normal! cwvar_dump\<ESC>Adie;\<ESC>:w<CR>"
@@ -150,6 +153,16 @@ func! Run()
     exec "!php %"
   elseif &filetype == 'sh'
     exec "!sh %"
+  endif
+endfunc
+
+func! ConvertHtmlAndJs()
+  if &filetype == 'html'
+    echo "set filetype to javascript"
+    set ft=js
+  elseif &filetype == 'javascript'
+    echo "set filetype to html"
+    set ft=html
   endif
 endfunc
 
@@ -196,13 +209,13 @@ let g:neocomplcache_enable_smart_case=1
 let g:neocomplcache_min_syntax_length=3
 let g:neocomplcache_lock_buffer_name_pattern='\*ku\*'
 let g:neocomplcache_dictionary_filetype_lists={
-  \ 'default' : '',
-  \ 'vimshell' : $HOME.'/.vimshell_hist',
-  \ 'scheme' : $HOME.'/.gosh_completions'
-  \ }
+      \ 'default' : '',
+      \ 'vimshell' : $HOME.'/.vimshell_hist',
+      \ 'scheme' : $HOME.'/.gosh_completions'
+      \ }
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
+  let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
@@ -291,10 +304,14 @@ Bundle 'vim-scripts/surround.vim'
 
 Bundle 'mattn/emmet-vim'
 "powerline{{{
+Bundle 'powerline/powerline'
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 " Bundle 'Lokaltog/powerline'
-Bundle 'Lokaltog/vim-powerline'
-set guifont=PowerlineSymbols\ for\ Powerline
-let g:Powerline_symbols = 'fancy'
+" Bundle 'Lokaltog/vim-powerline'
+" set guifont=PowerlineSymbols\ for\ Powerline
+" let g:Powerline_symbols = 'fancy'
 "}}}}
 
 Bundle 'Mark'
@@ -310,7 +327,6 @@ Bundle "SirVer/ultisnips"
 let g:UltiSnipsExpandTrigger="<c-e>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 " Bundle "markwu/vim-laravel4-snippets"
