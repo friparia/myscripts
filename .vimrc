@@ -89,8 +89,8 @@ comm! W exec 'w !sudo tee % > /dev/null' | e!
 au BufRead,BufNewFile *.tpl set ft=html
 au BufRead,BufNewFile *.volt set ft=html
 au FileType volt set ft=html
-au FileType html,python,vim setl shiftwidth=2
-au FileType html,python,vim setl tabstop=2
+au FileType html,python,vim setl shiftwidth=4
+au FileType html,python,vim setl tabstop=4
 au FileType java,php,javascript setl shiftwidth=4
 au FileType java,php,javascript setl tabstop=4
 au FileType javascript set syntax=jquery
@@ -117,15 +117,14 @@ nnoremap <silent> <LocalLeader>= YP
 nnoremap <Leader>z :w!<CR>
 
 " Splitline
-nnoremap <silent> <C-J> gEa<CR><ESC>ew 
+" nnoremap <silent> <C-J> gEa<CR><ESC>ew 
 
 nnoremap # :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 nnoremap * #
 
 " 执行命令后的输出到文件中
 nnoremap <C-I> <ESC>:read ! 
-" 直接选择shell
-nnoremap <C-H> <ESC>:sh<CR>
+
 " 在分号前加一个右括号
 map <C-A> $i)
 
@@ -136,6 +135,10 @@ map <F5> :call Run()<CR>
 map <F6> :call VarDump()<CR>
 " 在写html中的js时使用ft=javascript
 map <C-X> :call ConvertHtmlAndJs()<CR>
+" awesome git plugin
+map <C-H> :Gstatus<CR>
+map <C-J> :Gcommit<CR>
+map <C-K> :UltiSnipsEdit<CR>
 
 func! VarDump()
   exec "normal! yyp"
@@ -164,6 +167,8 @@ func! ConvertHtmlAndJs()
   elseif &filetype == 'javascript'
     echo "set filetype to html"
     set ft=html
+  else
+    echo "nothoing converted"
   endif
 endfunc
 
@@ -309,6 +314,10 @@ Bundle 'powerline/powerline'
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
+" Bundle 'Lokaltog/powerline'
+" Bundle 'Lokaltog/vim-powerline'
+" set guifont=PowerlineSymbols\ for\ Powerline
+" let g:Powerline_symbols = 'fancy'
 "}}}}
 
 Bundle 'Mark'
