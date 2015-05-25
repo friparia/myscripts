@@ -5,6 +5,7 @@ python get-pip.py
 pip install powerline-status
 
 yum install -y wget
+yum install -y ctags
 FILESERVERHOST=( 10.3.18.186 file.friparia.com )
 FILESERVERDIR=( /frip "")
 echo -e "\033[032mCalculating fastest mirror\033[0m"
@@ -27,7 +28,6 @@ FASTFILESERVER=${FILESERVERHOST[$selected]}
 FASTFILESERVERDIR=${FILESERVERDIR[$selected]}
 echo -e "\033[032mThe fastest host is $FASTFILESERVER\033[0m"
 
-yum install -y ctags
 
 if [ -z $1 ];then
   if [ -e ~/vimrc.tar.gz ];then
