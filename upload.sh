@@ -1,3 +1,4 @@
+cd ~/myscripts/
 git pull
 cp -f ~/.zshrc ~/myscripts/.zshrc
 cp -f ~/.vimrc ~/myscripts/.vimrc

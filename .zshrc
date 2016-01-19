@@ -111,6 +111,10 @@ function q () {
   git checkout $branch && git pull origin $branch && git checkout $current_branch && git rebase $branch && git checkout $branch && git merge --no-ff $current_branch && git push origin dev-8
 }
 
-function u () {
+function up () {
+  sh ~/myscripts/upload.sh
+}
+
+function update () {
   sh ~/myscripts/update.sh
 }
