@@ -16,6 +16,7 @@ cd Python-2.7.9
 ./configure
 make
 make install
+yum install -y bzip2
 cd /opt/pkgs
 wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2
 tar jxvf vim-7.4.tar.bz2

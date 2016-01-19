@@ -106,7 +106,7 @@ function get_main_branch() {
 function q () {
   branch=`get_main_branch`
   current_branch=`gb | awk '$1=="*" {print $2}'`
-  git checkout $branch && git pull origin $branch && git checkout $current_branch && git rebase $branch && git checkout $branch && git merge --no-ff $current_branch && git push origin dev-8
+  git checkout $branch && git pull origin $branch && git checkout $current_branch && git rebase $branch && git checkout $branch && git merge --no-ff $current_branch && git push origin $branch
 }
 
 function up () {
