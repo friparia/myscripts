@@ -23,6 +23,7 @@ set smartcase " 查找大写时不忽略
 set incsearch
 set path+=../
 set path+=../../
+let $GIT_SSL_NO_VERIFY = 'true'
 " "}}}
 
 " Formatting "{{{
@@ -78,7 +79,7 @@ set mousehide " Hide mouse after chars typed
 set splitbelow
 set splitright
 set t_Co=256
-colorscheme jellybeans
+colorscheme Tomorrow-Night
 " }}}
 
 " Command and Auto commands "{{{
@@ -200,9 +201,9 @@ Bundle 'JavaScript-syntax'
 Bundle 'Better-Javascript-Indentation'
 Bundle 'jsbeautify'
 Bundle 'int3/vim-taglist-plus'
-Bundle 'friparia/php.vim'
-Bundle 'phpfolding.vim'
+" Bundle 'friparia/php.vim'
 Bundle 'sql.vim'
+Bundle 'StanAngeloff/php.vim'
 let javaScript_fold=1
 " Git
 " Bundle 'git.zip'
@@ -328,6 +329,7 @@ Bundle 'tpope/vim-pathogen'
 " Bundle 'wookiehangover/jshint.vim'
 Bundle "xsbeats/vim-blade"
 Bundle "SirVer/ultisnips"
+Bundle "keith/swift.vim"
 
 " Trigger configuration. Do not use <tab> if you use
 let g:UltiSnipsExpandTrigger="<c-e>"
@@ -337,6 +339,15 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 " Bundle "markwu/vim-laravel4-snippets"
 " autocmd FileType php set ft=php.laravel
+
+
+"cs fixer{{{
+Bundle "stephpy/vim-php-cs-fixer"
+let g:php_cs_fixer_level = "all"
+let g:php_cs_fixer_config = "default"
+let g:php_cs_fixer_php_path = "php"
+nnoremap <silent><leader>= :call PhpCsFixerFixFile()<CR>
+"}}}
 
 filetype plugin indent on " 自动对齐， 允许插件
 "}}}
