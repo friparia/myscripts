@@ -1,2 +1,2 @@
-cp -f .zshrc ~/.zshrc
-cp -f .vimrc ~/.vimrc
+cp -f ~/myscripts/.zshrc ~/.zshrc
+cp -f ~/myscripts/.vimrc ~/.vimrc
