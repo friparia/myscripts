@@ -57,7 +57,8 @@ elif [ $1 = --update ];then
   echo -e ""
   exit
 elif [ $1 = --github ];then
-  # vim +BundleInstall! +BundleClean +q
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  vim +BundleInstall! +BundleClean +q
   exit
 else
   echo -e '\033[041mwrong parameter!\033[0m'
