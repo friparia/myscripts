@@ -163,7 +163,10 @@ prompt_hg() {
 }
 
 prompt_vim() {
-  [[ -n `ps aux | grep -v grep | grep vim` ]] && prompt_segment green black '!'
+  if [[ -n `ps aux | grep -v grep | grep vim` ]]; then
+    count=`ps aux | grep -v grep | grep vim | wc -l` 
+    prompt_segment green black $count
+  fi
 }
 
 # Dir: current working directory
