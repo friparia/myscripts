@@ -108,7 +108,6 @@ function q () {
   current_branch=`git branch | awk '$1=="*" {print $2}'`
   if [[ -n `git status | grep 'nothing to commit'` ]]; then
     echo "nothing to commit!"
-    exit
   else
     information=("${(@s/-/)current_branch}")
     a "$information"
