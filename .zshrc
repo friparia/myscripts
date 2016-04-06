@@ -106,6 +106,13 @@ function get_main_branch() {
 function q () {
   branch=`get_main_branch`
   current_branch=`git branch | awk '$1=="*" {print $2}'`
+  if [[ -n `git status | grep 'nothing to commit'` ]]; then
+    echo "nothing to commit!"
+    exit
+  else
+    information=("${(@s/-/)current_branch}")
+    a "$information"
+  fi
   git checkout $branch && git pull origin $branch && git checkout $current_branch && git rebase $branch && git checkout $branch && git merge --no-ff $current_branch && git push origin $branch && git branch -d $current_branch
 }
 
@@ -113,7 +120,10 @@ function up () {
   sh ~/myscripts/upload.sh
 }
 
+
 function update () {
+  cd ~/myscripts
+  git pull
   sh ~/myscripts/update.sh
 }
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
