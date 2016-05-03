@@ -115,6 +115,13 @@ function q () {
   git checkout $branch && git pull origin $branch && git checkout $current_branch && git rebase $branch && git checkout $branch && git merge --no-ff $current_branch && git push origin $branch && git branch -d $current_branch
 }
 
+function f (){
+    vared -p 'Please enter your commit message: ' -c message
+    branch=${message// /-}
+    n $branch
+    q
+}
+
 function up () {
   sh ~/myscripts/upload.sh
 }
