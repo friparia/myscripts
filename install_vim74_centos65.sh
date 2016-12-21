@@ -33,3 +33,4 @@ pyconfig=`echo | locate python | grep 'python2.7/config$'`
 make
 make install
 hash -r
+

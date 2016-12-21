@@ -20,26 +20,24 @@ if [ $COUNTER = 0 ];then
   args=(vim zshrc ssh)
 fi
 
+cd ~/myscripts/
 git pull origin master
 
 if in_array args vimrc;then
-  echo "Updating vimrc..."
-  cp -f ~/myscripts/.vimrc ~/.vimrc
-  d=`date +"%Y-%m-%d_%T"`
-  mv ~/.vim ~/.vim.bak.$d
-  tar -zxvf vim.tar.gz
-  mv ./root/.vim ~/.vim
-  vim +BundleInstall +qa
+  echo "Sync vimrc..."
+  cp -f ~/.vimrc ~/myscripts/.vimrc
+  tar -zcvf vim.tar.gz ~/.vim/autoload ~/.vim/colors ~/.vim/UltiSnips ~/.vim/bundle/vundle
 fi
 
 if in_array args zshrc;then
-  echo "Updating zshrc..."
-  cp -f ~/myscripts/.zshrc ~/.zshrc
-  cp -f ./agnoster.zsh-theme ~/.oh-my-zsh/themes/.
+  echo "Sync zshrc..."
+  cp -f ~/.zshrc ~/myscripts/.zshrc
 fi
 
 if in_array args ssh;then
-  echo "Updating ssh config..."
-  openssl rsautl -decrypt -in ./ssh_config.de -inkey ~/.ssh/friparia.key -out ~/.ssh/config
+  echo "Sync ssh config..."
+  openssl rsautl -encrypt -in ~/.ssh/config -inkey ./friparia.pub -pubin -out ssh_config.de
 fi
 
+git commit -am "update config files"
+git push 
