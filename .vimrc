@@ -78,8 +78,13 @@ set mousehide " Hide mouse after chars typed
 
 set splitbelow
 set splitright
-set t_Co=256
-colorscheme Tomorrow-Night
+if !has("gui_running")
+  set term=xterm
+  set t_Co=256
+  let &t_AB="\e[48;5;%dm"
+  let &t_AF="\e[38;5;%dm"
+  colorscheme jellybeans
+endif
 " }}}
 
 " Command and Auto commands "{{{
@@ -90,10 +95,8 @@ comm! W exec 'w !sudo tee % > /dev/null' | e!
 au BufRead,BufNewFile *.tpl set ft=html
 au BufRead,BufNewFile *.volt set ft=html
 au FileType volt set ft=html
-au FileType html,python,vim setl shiftwidth=4
-au FileType html,python,vim setl tabstop=4
-au FileType java,php,javascript setl shiftwidth=4
-au FileType java,php,javascript setl tabstop=4
+au FileType java,php,javascript,python,html setl shiftwidth=4
+au FileType java,php,javascript,python,html setl tabstop=4
 au FileType javascript set syntax=jquery
 au FileType js set ft=javascript
 
@@ -131,7 +134,6 @@ map <C-A> $i)
 
 " map <F4> :EnablePHPFolds()<CR>
 map <F4> :JSHintToggle<CR>
-map <F4> :call PhpCsFixerFixFile()<CR>
 map <silent> <F12> :set invlist<CR>
 map <F5> :call Run()<CR>
 map <F6> :call VarDump()<CR>
@@ -159,6 +161,8 @@ func! Run()
     exec "!php %"
   elseif &filetype == 'sh'
     exec "!sh %"
+  elseif &filetype == 'python'
+    exec "!python %"
   endif
 endfunc
 
@@ -331,6 +335,7 @@ Bundle 'tpope/vim-pathogen'
 Bundle "xsbeats/vim-blade"
 Bundle "SirVer/ultisnips"
 Bundle "keith/swift.vim"
+Bundle 'posva/vim-vue'
 
 " Trigger configuration. Do not use <tab> if you use
 let g:UltiSnipsExpandTrigger="<c-e>"
