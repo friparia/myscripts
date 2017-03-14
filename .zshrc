@@ -134,3 +134,15 @@ function update () {
 }
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
 autoload -U compinit && compinit -u
+
+case "$TERM" in
+  "dumb")
+    PS1="> "
+    ;;
+  xterm*|rxvt*|eterm*|screen*)
+    PS1='%{%f%b%k%}$(build_prompt) '
+    ;;
+  *)
+    PS1="> "
+    ;;
+esac
