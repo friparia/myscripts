@@ -26,7 +26,7 @@ git pull origin master
 if in_array args vimrc;then
   echo "Sync vimrc..."
   cp -f ~/.vimrc ~/myscripts/.vimrc
-  tar -zcvf vim.tar.gz ~/.vim/autoload ~/.vim/colors ~/.vim/UltiSnips ~/.vim/bundle/vundle
+  tar -zcvf vim.tar.gz .vim/autoload .vim/colors .vim/UltiSnips .vim/bundle/vundle
 fi
 
 if in_array args zshrc;then
