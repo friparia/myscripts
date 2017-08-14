@@ -1,5 +1,8 @@
 cd ~
-yum --enablerepo=base install zsh -y
+PLATFORM=platform
+if [[ $PLATFORM == "Linux" ]];then
+  yum --enablerepo=base install zsh -y
+fi
 chsh -s /bin/zsh
 curl -L http://install.ohmyz.sh | sh
 sed -i "s/^ZSH_THEME=.*$/ZSH_THEME=\"agnoster\"/g" ~/.zshrc

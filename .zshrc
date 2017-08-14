@@ -148,17 +148,16 @@ function test_host () {
 }
 
 function s (){
-test=`ssh -o ConnectTimeout=5 $1 exit`
-if [[ $? -eq 0 ]];then
-  ssh $1
-else
-  config=`test_host $1`
-  if [[ -n $config ]]; then
-    echo $config >> ~/.ssh/config
+  test=`ssh -o ConnectTimeout=5 $1 exit`
+  if [[ $? -eq 0 ]];then
     ssh $1
+  else
+    config=`test_host $1`
+    if [[ -n $config ]]; then
+      echo $config >> ~/.ssh/config
+      ssh $1
+    fi
   fi
-
-fi
 }
 
 function up () {
