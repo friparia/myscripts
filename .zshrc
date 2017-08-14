@@ -122,6 +122,45 @@ function f (){
     q
 }
 
+function test_host () {
+  for port in "22" "13911"
+  do
+    for prefix in "10.3.19." "10.3." ""
+    do
+      for user in "root"
+      do
+        for key in "id_rsa"
+        do
+          server="$prefix$1"
+          `ssh -o ConnectTimeout=5 -o BatchMode=yes -p$port -i ~/.ssh/$key $user@$server exit`
+          if [[ $? -eq 0 ]];then
+            echo "Host $1"
+            echo "  HostName $server"
+            echo "  Port $port"
+            echo "  User $user"
+            echo "  IdentityFile ~/.ssh/$key"
+            return 0
+          fi
+        done
+      done
+    done
+  done
+}
+
+function s (){
+test=`ssh -o ConnectTimeout=5 $1 exit`
+if [[ $? -eq 0 ]];then
+  ssh $1
+else
+  config=`test_host $1`
+  if [[ -n $config ]]; then
+    echo $config >> ~/.ssh/config
+    ssh $1
+  fi
+
+fi
+}
+
 function up () {
   sh ~/myscripts/upload.sh
 }
