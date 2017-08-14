@@ -17,7 +17,7 @@ while [ "$1" != "" ]; do
 done;
 
 if [ $COUNTER = 0 ];then
-  args=(vim zshrc ssh)
+  args=(vim zshrc ssh emacs)
 fi
 
 git pull origin master
@@ -36,6 +36,11 @@ if in_array args zshrc;then
   echo "Updating zshrc..."
   cp -f ~/myscripts/.zshrc ~/.zshrc
   cp -f ./agnoster.zsh-theme ~/.oh-my-zsh/themes/.
+fi
+
+if in_array args emacs;then
+  echo "Updating dot spacemacs"
+  cp -f ~/myscripts/.spacemacs ~/.spacemacs
 fi
 
 if in_array args ssh;then

@@ -17,7 +17,7 @@ while [ "$1" != "" ]; do
 done;
 
 if [ $COUNTER = 0 ];then
-  args=(vim zshrc ssh)
+  args=(vim zshrc ssh emacs)
 fi
 
 cd ~/myscripts/
@@ -33,6 +33,11 @@ fi
 if in_array args zshrc;then
   echo "Sync zshrc..."
   cp -f ~/.zshrc ~/myscripts/.zshrc
+fi
+
+if in_array args emacs;then
+  echo "Sync dot spacemacs"
+  cp -f ~/.spacemacs ~/myscripts/.spacemacs
 fi
 
 if in_array args ssh;then
