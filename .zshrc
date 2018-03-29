@@ -50,7 +50,7 @@ plugins=(colorize git git-flow laravel4 composer autojump)
 
 # User configuration
 
-export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin:/Users/friparia/go/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -84,8 +84,6 @@ alias gca="git commit -a"
 alias gc="git checkout"
 alias gb="git branch"
 alias gl="git log --graph --color"
-alias gh="git push origin dev-8"
-alias -g fuck="  && sed -i '6s/127.0.0.1/10.3.19.151/g' config/config.php && git update-index --assume-unchanged config/config.php && git update-index --assume-unchanged ../wrd.asc"
 alias a="git commit -am"
 alias n="git checkout -b"
 
@@ -122,43 +120,81 @@ function f (){
     q
 }
 
-function test_host () {
-  for port in "22" "13911"
-  do
-    for prefix in "10.3.19." "10.3." ""
-    do
-      for user in "root"
-      do
-        for key in "id_rsa"
-        do
-          server="$prefix$1"
-          `ssh -o ConnectTimeout=5 -o BatchMode=yes -p$port -i ~/.ssh/$key $user@$server exit`
-          if [[ $? -eq 0 ]];then
-            echo "Host $1"
-            echo "  HostName $server"
-            echo "  Port $port"
-            echo "  User $user"
-            echo "  IdentityFile ~/.ssh/$key"
-            return 0
-          fi
-        done
-      done
-    done
-  done
+_s_get_command_list () {
+  cat ~/.ssh/config | sed '/^ /d' | awk '{print $2}'
 }
 
-function s (){
-  test=`ssh -o ConnectTimeout=5 $1 exit`
-  if [[ $? -eq 0 ]];then
-    ssh $1
+_s_get_required_list () {
+  #不知道干嘛的
+}
+
+_s () {
+  local curcontext="$curcontext" state line
+  typeset -A opt_args
+  _arguments \
+    '1: :->command'\
+    '*: :->args'
+
+  case $state in
+    command)
+      compadd $(_s_get_command_list)
+      ;;
+    *)
+      compadd $(_s_get_required_list)
+      ;;
+  esac
+}
+
+
+s (){
+  local name=$1
+  shift
+  if [[ $@ = "" ]]; then
+    ssh $name
   else
-    config=`test_host $1`
-    if [[ -n $config ]]; then
-      echo $config >> ~/.ssh/config
-      ssh $1
+    local port=22
+    local identity=""
+    local option=()
+    local host=""
+    while [[ $# -gt 0 ]]
+    do
+      key="$1"
+      case $key in
+        -p)
+          port="$2"
+          shift 
+          shift 
+          ;;
+        -i)
+          identity="$2"
+          shift 
+          shift 
+          ;;
+        -o)
+          option+=("-o $2")
+          shift 
+          shift 
+          ;;
+        *)   
+          host=$1
+          shift 
+          ;;
+      esac
+    done
+    exist=`cat ~/.ssh/config | grep "Host $name"`
+    method="edit"
+    if [[ $exist = "" ]]; then
+      method="add"
     fi
+    if [[ $identity = ""  ]]; then
+      storm $method $name $host:$port $option
+    else
+      storm $method $name $host:$port --id_file $identity $option
+    fi
+    ssh $name
   fi
 }
+
 
 function up () {
   sh ~/myscripts/upload.sh
@@ -184,3 +220,5 @@ case "$TERM" in
     PS1="> "
     ;;
 esac
+
+compdef _s s
